@@ -22,39 +22,20 @@ public:
 class Solution {
 public:
     Node* copyRandomList(Node* head) {
+        map<Node*, Node*> mn;
         Node* dop = head;
-        Node* res = nullptr;
-        Node* res_start = nullptr;
-        map<Node*,Node*> nodes;
         while (dop != nullptr)
         {
-            if (res == nullptr)
-            {
-                res = new Node(dop->val);
-                res_start = res;
-                nodes[dop] = res;
-            }
-            else
-            {
-                Node* newNode = new Node(dop->val);
-                res->next = newNode;
-                nodes[dop] = newNode;
-                res = res->next;
-            }
+            mn[dop] = new Node(dop->val);
             dop = dop->next;
         }
-        res = res_start;
-        while (head != nullptr)
+        dop = head;
+        while (dop != nullptr)
         {
-            if (head->random == nullptr)
-                res->random = nullptr;
-            else
-                res->random = nodes[head->random];
-            head = head->next;
-            res = res->next;
+            mn[dop]->next = mn[dop->next];
+            mn[dop]->random = mn[dop->random];
         }
-        return res_start;
-
+        return mn[head];
     }
 };
 
