@@ -1,6 +1,5 @@
 ﻿#include <iostream>
-#include <vector>
-#include <map>
+
 
 using namespace std;
 
@@ -8,37 +7,36 @@ using namespace std;
 //Definition for a binary tree node.
 struct TreeNode {
     int val;
-    TreeNode *left;
-    TreeNode *right;
+    TreeNode* left;
+    TreeNode* right;
     TreeNode() : val(0), left(nullptr), right(nullptr) {}
     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
-    TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+    TreeNode(int x, TreeNode* left, TreeNode* right) : val(x), left(left), right(right) {}
 };
- 
+
 class Solution {
 public:
-    void remake(TreeNode* root, int &prev)
+    void remake(TreeNode* root, int& prev)
     {
         if (root->right != nullptr)
         {
-            remake(root->right,prev);
+            remake(root->right, prev);
             root->val += prev;
         }
         else
             root->val += prev;
         prev = root->val;
-        int dop = root->val;
-        if (root->left!=nullptr)
-            remake(root->left,dop);
+        if (root->left != nullptr)
+            remake(root->left, prev);
     }
     TreeNode* convertBST(TreeNode* root) {
         int prev = 0;
-        remake(root,prev);
+        if (root != nullptr)
+            remake(root, prev);
         return root;
     }
 
 };
-
 
 int main()
 {
